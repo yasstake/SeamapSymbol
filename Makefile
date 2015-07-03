@@ -8,13 +8,13 @@ all: $(OUTFILES)
 
 
 OUT/%.svg : E60_60/%.svg
-	cat $< | python filter.py E 60 60 | svgo -i - -o - > $@
+	cat $< | svgo -i - -o -  | python filter.py E 60 60 > $@
 
 OUT/%.svg : E80_80/%.svg
-	cat $< | python filter.py E 80 80 | svgo -i - -o - > $@
+	cat $< | svgo -i - -o - | python filter.py E 80 80  > $@
 
 OUT/%.svg : E125_125/%.svg
-	cat $< | python filter.py E 125 125 | svgo -i - -o - > $@
+	cat $< | svgo -i - -o - | python filter.py E 125 125 > $@
 
 OUT/%.svg : R25_100/%.svg
 	cat $< | python filter.py R 25 100 | svgo -i - -o - > $@
