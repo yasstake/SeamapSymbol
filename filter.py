@@ -46,8 +46,8 @@ if param[1]=="R":
     bounds.set("height", str(boundsHeight*2))
 
 
-bounds.set("fill", "#333")
-bounds.set("opacity", str(0.2))
+bounds.set("fill", "#fff")
+bounds.set("opacity", "0.0001")
 root.append(bounds);
 
 
