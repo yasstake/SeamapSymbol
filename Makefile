@@ -80,4 +80,5 @@ download-font:
 	unzip NotoSansCJKjp-hinted.zip
 
 font-glyph:
+	- mkdir noto
 	build-glyphs 'NotoSansCJKjp-Regular.otf' noto
