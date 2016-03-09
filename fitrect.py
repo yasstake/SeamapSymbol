@@ -13,12 +13,13 @@ width = int(argv[1])
 height = int(argv[2])
 svgIn = argv[3]
 svgOut = argv[4]
+scale= float(argv[5])
 
-file = sg.SVGFigure(str(width), str(height))
+file = sg.SVGFigure(str(width*scale), str(height*scale))
 
 icon = sg.fromfile(svgIn).getroot()
 
-icon.moveto(-(300-width)/2, -(400-height)/2)
+icon.moveto(-(300-width)*scale/2, -(400-height)*scale/2, scale=scale)
 
 file.append(icon)
 file.save(svgOut)
