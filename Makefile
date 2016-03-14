@@ -1,79 +1,55 @@
-include filelist
+#include filelist
+include FILELIST
+
+FILES=$(CAN) $(LIGHT) $(LIGHT_BEAM) $(BEACON) $(PILLAR) $(LANE)
+#   $(SPAR) 
+
 
 
 OUTFILES=$(FILES:%=OUT/%)
-OUTFILES2=$(FILES:%=OUT2/%)
+
+all: seamap.png
+
+seamap.png: $(OUTFILES)
+	spritezero  seamap OUT
 
 
-all: $(OUTFILES)
+OUT/%.svg: SRC/CAN/%.svg
+	python fitrect.py 100 100  $< $@ 0.2
 
-all2: $(OUTFILES2)
 
-OUT/%.svg : E60_60/%.svg
-	cat $< | svgo -i - -o -  | python filter.py E 60 60 > $@
+OUT/%.svg: SRC/LIGHT/%.svg
+	python fitrect.py 120 120  $< $@ 0.2
 
-OUT/%.svg : E80_80/%.svg
-	cat $< | svgo -i - -o - | python filter.py E 80 80  > $@
 
-OUT/%.svg : E125_125/%.svg
-	cat $< | svgo -i - -o - | python filter.py E 125 125 > $@
+OUT/%.svg: SRC/LIGHT_BEAM/%.svg
+	cat $< | svgo -i - -o -  | python filter.py E 250 250 > $@.tmp
+	python fitrect.py 250 250  $@.tmp $@ 0.15
+	rm $@.tmp
 
-OUT/%.svg : R25_100/%.svg
-	cat $< | svgo -i - -o - | python filter.py R 25 100  > $@
 
-OUT/%.svg : R25_190/%.svg
-	cat $< |  svgo -i - -o - | python filter.py R 25 190  > $@
+OUT/%.svg: SRC/BEACON/%.svg
+	python fitrect.py 55 220  $< $@ 0.18
 
-OUT/%.svg : R50_150/%.svg
-	cat $< |  svgo -i - -o - | python filter.py R 50 150  > $@
+OUT/%.svg: SRC/BEACON/TOP/%.svg
+	cat $< | svgo -i - -o -  | python filter.py R 26 150 > $@.tmp.svg
+	python fitrect.py 55 300  $@.tmp.svg $@ 0.18
+	rm $@.tmp.svg
 
-OUT/%.svg : R50_190/%.svg
-	cat $< |  svgo -i - -o - | python filter.py R 50 190  > $@
+OUT/%.svg: SRC/PILLAR/%.svg
+	python fitrect.py 100 220  $< $@ 0.15
 
-OUT/%.svg : R75_190/%.svg
-	cat $< |  svgo -i - -o - | python filter.py R 75 190  > $@
+OUT/%.svg: SRC/LANE/%.svg
+	python fitrect.py 80 250  $< $@ 0.15
 
-OUT/%.svg : org/%.svg
-	cat $< | svgo -i - -o - > $@
+
 
 prepare:
 	- mkdir OUT
-	- mkdir OUT2
 
 clean:
 	- rm -rf OUT/*.svg
-	- rm -rf OUT2/*.svg
-
-#---
-OUT2/%.svg : E60_60/%.svg
-	cat $< > $@
-
-OUT2/%.svg : E80_80/%.svg
-	cat $< > $@
-
-OUT2/%.svg : E125_125/%.svg
-	cat $< > $@
-
-OUT2/%.svg : R25_100/%.svg
-	cat $< > $@
-
-OUT2/%.svg : R25_190/%.svg
-	cat $< > $@
-
-OUT2/%.svg : R50_150/%.svg
-	cat $< > $@
-
-OUT2/%.svg : R50_190/%.svg
-	cat $< > $@
-
-OUT2/%.svg : R75_190/%.svg
-	cat $< > $@
-
-OUT2/%.svg : org/%.svg
-	cat $< > $@
-
-splite:
-	spritezero seamap OUT2
+	- rm -f seamap.*
 
 download-font:
 	wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip
