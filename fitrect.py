@@ -1,6 +1,8 @@
 
 import svgutils.transform as sg
 import sys 
+import os
+
 
 #width = 60
 #height = 60
@@ -22,4 +24,11 @@ icon = sg.fromfile(svgIn).getroot()
 icon.moveto(-(300-width)*scale/2, -(400-height)*scale/2, scale=scale)
 
 file.append(icon)
+
+tmpfile=svgOut + "tmp"
+
 file.save(svgOut)
+#file.save(tmpfile)
+#os.system("svgo -i " + tmpfile  + " -o " + svgOut + " --enable=transformsWithOnePath")
+#os.remove(tmpfile)
+
