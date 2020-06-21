@@ -51,6 +51,6 @@ bounds.set("opacity", "0.0001")
 root.append(bounds);
 
 
-print ET.tostring(tree)
+print(ET.tostring(tree, encoding='utf-8', method='xml').decode('utf-8'))
 
 

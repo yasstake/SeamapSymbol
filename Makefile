@@ -43,7 +43,6 @@ OUT/%.svg: SRC/LANE/%.svg
 	python fitrect.py 80 250  $< $@ 0.15
 
 
-
 prepare:
 	- mkdir OUT
 
@@ -58,3 +57,18 @@ download-font:
 font-glyph:
 	- mkdir noto
 	build-glyphs 'NotoSansCJKjp-Regular.otf' noto
+
+
+install-mac:
+	brew install nodebrew
+	nodebrew install-binary latest
+
+install:
+	npm install -g @mapbox/spritezero-cli
+	python -m pip install svgutils
+	npm install -g svgo
+	#npm install @mapbox/spritezero
+
+
+
+
